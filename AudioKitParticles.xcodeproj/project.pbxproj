@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05298C3C202091DE0039091D /* GeometricTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05298C3B202091DE0039091D /* GeometricTypes.swift */; };
+		05298C3E202091FB0039091D /* SphereGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05298C3D202091FB0039091D /* SphereGenerator.swift */; };
+		05298C412020927E0039091D /* MBEDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05298C402020927E0039091D /* MBEDemoViewController.swift */; };
+		05298C43202092C90039091D /* MBEDemoTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05298C42202092C90039091D /* MBEDemoTwo.swift */; };
+		05298C47202093380039091D /* DemoTwo.metal in Sources */ = {isa = PBXBuildFile; fileRef = 05298C46202093380039091D /* DemoTwo.metal */; };
 		3E5105931C310A4100CEC622 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5105921C310A4100CEC622 /* AppDelegate.swift */; };
 		3E5105951C310A4100CEC622 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5105941C310A4100CEC622 /* ViewController.swift */; };
 		3E5105981C310A4100CEC622 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E5105961C310A4100CEC622 /* Main.storyboard */; };
@@ -34,6 +39,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		05298C3B202091DE0039091D /* GeometricTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricTypes.swift; sourceTree = "<group>"; };
+		05298C3D202091FB0039091D /* SphereGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SphereGenerator.swift; sourceTree = "<group>"; };
+		05298C402020927E0039091D /* MBEDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBEDemoViewController.swift; sourceTree = "<group>"; };
+		05298C42202092C90039091D /* MBEDemoTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBEDemoTwo.swift; sourceTree = "<group>"; };
+		05298C46202093380039091D /* DemoTwo.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = DemoTwo.metal; sourceTree = "<group>"; };
 		3E51058F1C310A4100CEC622 /* AudioKitParticles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioKitParticles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E5105921C310A4100CEC622 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E5105941C310A4100CEC622 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +69,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05298C3A20208C9A0039091D /* sphereLab */ = {
+			isa = PBXGroup;
+			children = (
+				05298C3B202091DE0039091D /* GeometricTypes.swift */,
+				05298C3D202091FB0039091D /* SphereGenerator.swift */,
+				05298C46202093380039091D /* DemoTwo.metal */,
+			);
+			name = sphereLab;
+			sourceTree = "<group>";
+		};
+		05298C3F202092500039091D /* sphere vc */ = {
+			isa = PBXGroup;
+			children = (
+				05298C402020927E0039091D /* MBEDemoViewController.swift */,
+				05298C42202092C90039091D /* MBEDemoTwo.swift */,
+			);
+			name = "sphere vc";
+			sourceTree = "<group>";
+		};
 		3E5105861C310A4100CEC622 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +108,8 @@
 		3E5105911C310A4100CEC622 /* AudioKitParticles */ = {
 			isa = PBXGroup;
 			children = (
+				05298C3F202092500039091D /* sphere vc */,
+				05298C3A20208C9A0039091D /* sphereLab */,
 				3E5105B41C310BDA00CEC622 /* particleLab */,
 				3E5105921C310A4100CEC622 /* AppDelegate.swift */,
 				3E5105941C310A4100CEC622 /* ViewController.swift */,
@@ -184,10 +215,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05298C43202092C90039091D /* MBEDemoTwo.swift in Sources */,
 				C4D88CFA1C6AD6C9005BB6CE /* Loop.swift in Sources */,
+				05298C3E202091FB0039091D /* SphereGenerator.swift in Sources */,
+				05298C3C202091DE0039091D /* GeometricTypes.swift in Sources */,
 				3E5105951C310A4100CEC622 /* ViewController.swift in Sources */,
+				05298C47202093380039091D /* DemoTwo.metal in Sources */,
 				3E5105931C310A4100CEC622 /* AppDelegate.swift in Sources */,
 				3E5105B61C310BFC00CEC622 /* Particles.metal in Sources */,
+				05298C412020927E0039091D /* MBEDemoViewController.swift in Sources */,
 				3E5105B81C310C4200CEC622 /* ParticleLab.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

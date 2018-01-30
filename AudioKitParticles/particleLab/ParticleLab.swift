@@ -62,13 +62,13 @@ class ParticleLab: MTKView {
     
     weak var particleLabDelegate: ParticleLabDelegate?
     
-    var particleColor = ParticleColor(R: 1, G: 0.2, B: 0.1, A: 1)
+    var particleColor = ParticleColor(R: 0.2, G: 0.1, B: 0.4, A: 1)
     var dragFactor: Float = 0.95
     var respawnOutOfBoundsParticles = true
     
     lazy var blur: MPSImageGaussianBlur = {
         [unowned self] in
-        return MPSImageGaussianBlur(device: self.device!, sigma: 3)
+        return MPSImageGaussianBlur(device: self.device!, sigma: 2)
         }()
     
     lazy var dilate: MPSImageAreaMax = {
@@ -76,7 +76,7 @@ class ParticleLab: MTKView {
         return MPSImageAreaMax(device: self.device!, kernelWidth: 5, kernelHeight: 5)
         }()
     
-    var clearOnStep = true
+    var clearOnStep = false
     
     let statusPrefix: String
     var statusPostix: String = ""
@@ -89,7 +89,9 @@ class ParticleLab: MTKView {
         
         bytesPerRow = 4 * imageWidth
         
-        region = MTLRegionMake2D(0, 0, Int(imageWidth), Int(imageHeight))
+        
+//        region = MTLRegionMake2D(0, 0, Int(imageWidth), Int(imageHeight))
+        region = MTLRegionMake3D(0, 0, 0, Int(imageWidth), Int(imageHeight), 10)
         blankBitmapRawData = [UInt8](repeating: 0, count: Int(imageWidth * imageHeight * 4))
         particlesMemoryByteSize = particleCount * MemoryLayout<Particle>.size
         
@@ -314,7 +316,7 @@ class ParticleLab: MTKView {
             blur.encode(commandBuffer: commandBuffer,
                         inPlaceTexture: inPlaceTexture,
                         fallbackCopyAllocator: nil)
-            
+
             dilate.encode(commandBuffer: commandBuffer,
                           inPlaceTexture: inPlaceTexture,
                           fallbackCopyAllocator: nil)
@@ -437,6 +439,7 @@ enum GravityWell {
 //  Since each Particle instance defines four particles, the visible particle count
 //  in the API is four times the number we need to create.
 enum ParticleCount: Int {
+    case thousand = 8_192
     case qtrMillion = 65_536
     case halfMillion = 131_072
     case oneMillion = 262_144
