@@ -108,13 +108,12 @@ class MBEDemoTwoViewController : MBEDemoViewController {
         if let drawable = metalLayer.nextDrawable() {
             let yAxis = SPH_Vector4(x: 0, y: -1, z: 0, w: 0)
             var modelViewMatrix = SPH_Matrix4x4.rotationAboutAxis(yAxis, byAngle: rotationAngle)
-            modelViewMatrix = SPH_Matrix4x4.distoredByAmplitude(self.sizeCoef)
-            
+            modelViewMatrix = SPH_Matrix4x4.scale(byFactor: self.sizeCoef)
             modelViewMatrix.W.z = -2.5
             
             let aspect = Float(metalLayer.drawableSize.width) / Float(metalLayer.drawableSize.height)
             
-            let projectionMatrix = SPH_Matrix4x4.perspectiveProjection(aspect, fieldOfViewY: 95, near: 0.1, far: 100.0)
+            let projectionMatrix = SPH_Matrix4x4.perspectiveProjection(aspect, fieldOfViewY: 100, near: 0.1, far: 100.0)
             
             let matrices = [projectionMatrix, modelViewMatrix]
             memcpy(uniformBuffer.contents(), matrices, MemoryLayout<SPH_Matrix4x4>.stride * 2)

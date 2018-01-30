@@ -80,21 +80,21 @@ struct SPH_Matrix4x4
         return mat
     }
     
-    static func distoredByAmplitude(_ amplitude: Float) -> SPH_Matrix4x4
+    static func scale(byFactor: Float) -> SPH_Matrix4x4
     {
         var mat = SPH_Matrix4x4()
         
-        mat.X.x = mat.X.x * amplitude
-        mat.X.y = mat.X.y * amplitude
-        mat.X.z = mat.X.z * amplitude
+        mat.X.x = mat.X.x * byFactor
+        mat.X.y = 0
+        mat.X.z = 0
         
-        mat.Y.x = mat.Y.x * amplitude
-        mat.Y.y = mat.Y.y * amplitude
-        mat.Y.z = mat.Y.z * amplitude
+        mat.Y.x = 0
+        mat.Y.y = mat.Y.y * byFactor
+        mat.Y.z = 0
         
-        mat.Z.x = mat.Z.x * amplitude
-        mat.Z.y = mat.Z.y * amplitude
-        mat.Z.z = mat.Z.z * amplitude
+        mat.Z.x = 0
+        mat.Z.y = 0
+        mat.Z.z = mat.Z.z * byFactor
         
         return mat
     }
