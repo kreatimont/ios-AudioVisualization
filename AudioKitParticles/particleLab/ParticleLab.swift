@@ -68,15 +68,15 @@ class ParticleLab: MTKView {
     
     lazy var blur: MPSImageGaussianBlur = {
         [unowned self] in
-        return MPSImageGaussianBlur(device: self.device!, sigma: 2)
+        return MPSImageGaussianBlur(device: self.device!, sigma: 10)
         }()
     
     lazy var dilate: MPSImageAreaMax = {
         [unowned self] in
-        return MPSImageAreaMax(device: self.device!, kernelWidth: 5, kernelHeight: 5)
+        return MPSImageAreaMax(device: self.device!, kernelWidth: 1, kernelHeight: 1)
         }()
     
-    var clearOnStep = false
+    var clearOnStep = true
     
     let statusPrefix: String
     var statusPostix: String = ""
@@ -90,8 +90,8 @@ class ParticleLab: MTKView {
         bytesPerRow = 4 * imageWidth
         
         
-//        region = MTLRegionMake2D(0, 0, Int(imageWidth), Int(imageHeight))
-        region = MTLRegionMake3D(0, 0, 0, Int(imageWidth), Int(imageHeight), 10)
+        region = MTLRegionMake2D(0, 0, Int(imageWidth), Int(imageHeight))
+//        region = MTLRegionMake3D(0, 0, 0, Int(imageWidth), Int(imageHeight), 10)
         blankBitmapRawData = [UInt8](repeating: 0, count: Int(imageWidth * imageHeight * 4))
         particlesMemoryByteSize = particleCount * MemoryLayout<Particle>.size
         
@@ -439,7 +439,7 @@ enum GravityWell {
 //  Since each Particle instance defines four particles, the visible particle count
 //  in the API is four times the number we need to create.
 enum ParticleCount: Int {
-    case thousand = 8_192
+    case thousand = 256
     case qtrMillion = 65_536
     case halfMillion = 131_072
     case oneMillion = 262_144

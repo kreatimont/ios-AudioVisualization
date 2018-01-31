@@ -25,6 +25,10 @@ class ViewController: UIViewController {
     var hiMaxIndex: Float = 0
     var hiMinIndex: Float = 0
     
+    var sizeCoef: Float = 1
+    var maxCoef: Float = 20
+    var minCoef: Float = 2
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,9 +91,9 @@ class ViewController: UIViewController {
         }
         
         particleLab.particleLabDelegate = self
-        particleLab.dragFactor = 0.9
-        particleLab.clearOnStep = false
-        particleLab.respawnOutOfBoundsParticles = true
+        particleLab.dragFactor = 0.8
+        particleLab.clearOnStep = true
+        particleLab.respawnOutOfBoundsParticles = false
         
         view.addSubview(particleLab)
         
@@ -104,24 +108,69 @@ class ViewController: UIViewController {
         
         //spin - diameter, speed rotate
         
+        let currentAmplitude: Float = Float(self.amplitudeTracker.amplitude * 25)
+        let fftData = self.fft.fftData
+        let count = 250
+        
+        let lowMax = fftData[0 ... (count / 2) - 1].max() ?? 0
+        let hiMax = fftData[count / 2 ... count - 1].max() ?? 0
+        let hiMin = fftData[count / 2 ... count - 1].min() ?? 0
+        
+        let lowMaxIndex = Float(fftData.index(of: lowMax) ?? 0)
+        let hiMaxIndex = Float(fftData.index(of: hiMax) ?? 0)
+        let hiMinIndex = Float(fftData.index(of: hiMin) ?? 0)
+        
+        let lowMaxIndexR = Float(lowMaxIndex)
+        let hiMaxIndexR = Float(hiMaxIndex - count / 2)
+        let hiMinIndexR = Float(hiMinIndex - count / 2)
+        
+        let sizeCoef = (lowMaxIndexR  * currentAmplitude)
+        switch sizeCoef {
+        case -100...1:
+            //very slow
+            self.sizeCoef -= 1
+        case 1...2:
+            //slow
+            self.sizeCoef -= 0.1
+        case 2...3:
+            //medium
+            break
+        case 3...4:
+            //fast
+            self.sizeCoef += 0.1
+            break
+        case 4...100:
+            //very fast
+            self.sizeCoef += 1
+        default:
+            break
+        }
+        if self.sizeCoef < minCoef {
+            self.sizeCoef = minCoef
+        } else if self.sizeCoef > maxCoef {
+            self.sizeCoef = maxCoef
+        }
+        
         var radiusLow = 0.1 + (lowMaxIndex / 256)
         radiusLow = 0.01
         particleLab.setGravityWellProperties(
             gravityWell: .one,
             normalisedPositionX: 0.5,
             normalisedPositionY: 0.5,
-            mass: (lowMaxIndex * amplitude),
-            spin: -(lowMaxIndex * amplitude))
+            mass: self.sizeCoef > 10 ? -10 : 10,
+            spin: 0)
         
-//        particleLab.setGravityWellProperties(
-//            gravityWell: .four,
-//            normalisedPositionX: 0.5 + radiusLow * sin((gravityWellAngle + floatPi)),
-//            normalisedPositionY: 0.5 + radiusLow * cos((gravityWellAngle + floatPi)),
-//            mass: (lowMaxIndex * amplitude),
-//            spin: -(lowMaxIndex * amplitude))
+        print("Mass: \((lowMaxIndex * amplitude)); Spin: \(-(lowMaxIndex * amplitude))")
         
-        let radiusHi = 0.1 + (0.25 + (hiMaxIndex / 1_024))
+        particleLab.setGravityWellProperties(
+            gravityWell: .two,
+            normalisedPositionX: 0.5,
+            normalisedPositionY: 0.5,
+            mass: self.sizeCoef > 5 ? -5 : 5,
+            spin: self.sizeCoef > 5 ? -1 : 1)
         
+//        let radiusHi = 0.1 + (0.25 + (hiMaxIndex / 1_024))
+//
 //        particleLab.setGravityWellProperties(
 //            gravityWell: .two,
 //            normalisedPositionX: particleLab.getGravityWellNormalisedPosition(gravityWell: .one).x +
@@ -130,7 +179,7 @@ class ViewController: UIViewController {
 //                (radiusHi * cos(gravityWellAngle * 3)),
 //            mass: (hiMaxIndex * amplitude),
 //            spin: (hiMinIndex * amplitude))
-        
+//
 //        particleLab.setGravityWellProperties(
 //            gravityWell: .three,
 //            normalisedPositionX: particleLab.getGravityWellNormalisedPosition(gravityWell: .four).x +

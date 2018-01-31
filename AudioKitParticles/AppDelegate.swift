@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         
-        rootViewController = MBEDemoTwoViewController()
-//        rootViewController = ViewController()
+//        rootViewController = MBEDemoTwoViewController()
+        rootViewController = ViewController()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         rootViewController.view.frame = window!.bounds

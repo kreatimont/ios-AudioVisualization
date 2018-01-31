@@ -85,7 +85,7 @@ class MBEDemoTwoViewController : MBEDemoViewController {
     }
     
     override func buildResources() {
-        let (vertexBuffer, indexBuffer) = SphereGenerator.sphereWithRadius(0.8, stacks: 10, slices: 50, device: device)
+        let (vertexBuffer, indexBuffer) = SphereGenerator.sphereWithRadius(0.8, stacks: 100, slices: 200, device: device)
         self.vertexBuffer = vertexBuffer
         self.indexBuffer = indexBuffer
         uniformBuffer = device.makeBuffer(length: MemoryLayout<SPH_Matrix4x4>.stride * 2, options: [])
