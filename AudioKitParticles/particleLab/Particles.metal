@@ -61,7 +61,7 @@ kernel void particleRendererShader(texture2d<float, access::write> outTexture [[
 //                                   type == 0 ? 0.0 : type == 1 ? 0.0 : 1.0,
 //                                   type == 0 ? 0.0 : type == 1 ? 1.0 : 0.0, 1);
     
-    const float4 outColor = float4(0.8, 0.8, 0.0, 1);
+    const float4 outColor = float4(0.8, 0.8, 0.0, 1); //yellow color
     
     
     // ---
@@ -230,6 +230,16 @@ kernel void particleRendererShader(texture2d<float, access::write> outTexture [[
 //        new_y_pos += (new_x_pos - (imageHeight / 2));
 //    }
     
+    float centerX = imageWidth / 2;
+    float centerY = imageHeight / 2;
+    
+    float particleDistanceFromCenter = sqrt(pow(inParticle[0].x - centerX, 2) + pow(inParticle[0].y - centerY, 2));
+    float radius = imageHeight - 40;
+    
+//    if (particleDistanceFromCenter > radius( {
+//        //decrease radius
+//    }
+    
     outParticle[0] = {
         new_x_pos,
         new_y_pos,
@@ -249,7 +259,7 @@ kernel void particleRendererShader(texture2d<float, access::write> outTexture [[
         ((inGravityWell[0].y - inParticle[0].y) * factorAZero) +
         ((inGravityWell[1].y - inParticle[0].y) * factorAOne) +
         ((inGravityWell[2].y - inParticle[0].y) * factorATwo) +
-        ((inGravityWell[3].y - inParticle[0].y) * factorAThree)+
+        ((inGravityWell[3].y - inParticle[0].y) * factorAThree) +
         
         ((inGravityWell[0].x - inParticle[0].x) * -spinAZero) +
         ((inGravityWell[1].x - inParticle[0].x) * -spinAOne) +

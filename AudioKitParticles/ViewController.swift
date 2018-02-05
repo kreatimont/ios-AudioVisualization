@@ -29,6 +29,8 @@ class ViewController: UIViewController {
     var maxCoef: Float = 20
     var minCoef: Float = 2
     
+    let fourGravity = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -151,43 +153,56 @@ class ViewController: UIViewController {
             self.sizeCoef = maxCoef
         }
         
+        let mass: Float = self.sizeCoef > 10 ? -10 : 10
+        let spin: Float = 0
+        
         var radiusLow = 0.1 + (lowMaxIndex / 256)
-        radiusLow = 0.01
-        particleLab.setGravityWellProperties(
-            gravityWell: .one,
-            normalisedPositionX: 0.5,
-            normalisedPositionY: 0.5,
-            mass: self.sizeCoef > 10 ? -10 : 10,
-            spin: 0)
         
-        print("Mass: \((lowMaxIndex * amplitude)); Spin: \(-(lowMaxIndex * amplitude))")
+        if !fourGravity {
+            particleLab.setGravityWellProperties(
+                gravityWell: .one,
+                normalisedPositionX: 0.5,
+                normalisedPositionY: 0.5,
+                mass: mass,
+                spin: spin)
         
-        particleLab.setGravityWellProperties(
-            gravityWell: .two,
-            normalisedPositionX: 0.5,
-            normalisedPositionY: 0.5,
-            mass: self.sizeCoef > 5 ? -5 : 5,
-            spin: self.sizeCoef > 5 ? -1 : 1)
+            particleLab.setGravityWellProperties(
+                gravityWell: .two,
+                normalisedPositionX: 0.5,
+                normalisedPositionY: 0.5,
+                mass: self.sizeCoef > 5 ? -5 : 5,
+                spin: self.sizeCoef > 5 ? -1 : 1)
+        } else {
+            let gravityCoef: Float = sizeCoef > 10 ? -0.1 : 0.1
+            
+            particleLab.setGravityWellProperties(gravityWell: .one, normalisedPositionX: 0.5, normalisedPositionY: 0.4 - gravityCoef, mass: mass, spin: spin)
+            particleLab.setGravityWellProperties(gravityWell: .two, normalisedPositionX: 0.6 + gravityCoef, normalisedPositionY: 0.5, mass: mass, spin: spin)
+            particleLab.setGravityWellProperties(gravityWell: .three, normalisedPositionX: 0.5, normalisedPositionY: 0.6 + gravityCoef, mass: mass, spin: spin)
+            particleLab.setGravityWellProperties(gravityWell: .four, normalisedPositionX: 0.4 - gravityCoef, normalisedPositionY: 0.5, mass: mass, spin: spin)
+            
+        }
         
-//        let radiusHi = 0.1 + (0.25 + (hiMaxIndex / 1_024))
-//
-//        particleLab.setGravityWellProperties(
-//            gravityWell: .two,
-//            normalisedPositionX: particleLab.getGravityWellNormalisedPosition(gravityWell: .one).x +
-//                (radiusHi * sin(gravityWellAngle * 3)),
-//            normalisedPositionY: particleLab.getGravityWellNormalisedPosition(gravityWell: .one).y +
-//                (radiusHi * cos(gravityWellAngle * 3)),
-//            mass: (hiMaxIndex * amplitude),
-//            spin: (hiMinIndex * amplitude))
-//
-//        particleLab.setGravityWellProperties(
-//            gravityWell: .three,
-//            normalisedPositionX: particleLab.getGravityWellNormalisedPosition(gravityWell: .four).x +
-//                (radiusHi * sin((gravityWellAngle + floatPi) * 3)),
-//            normalisedPositionY: particleLab.getGravityWellNormalisedPosition(gravityWell: .four).y +
-//                (radiusHi * cos((gravityWellAngle + floatPi) * 3)),
-//            mass: (hiMaxIndex * amplitude),
-//            spin: (hiMinIndex * amplitude))
+        //        print("Mass: \((lowMaxIndex * amplitude)); Spin: \(-(lowMaxIndex * amplitude))")
+        //        radiusLow = 0.01
+        //        let radiusHi = 0.1 + (0.25 + (hiMaxIndex / 1_024))
+        //
+        //        particleLab.setGravityWellProperties(
+        //            gravityWell: .two,
+        //            normalisedPositionX: particleLab.getGravityWellNormalisedPosition(gravityWell: .one).x +
+        //                (radiusHi * sin(gravityWellAngle * 3)),
+        //            normalisedPositionY: particleLab.getGravityWellNormalisedPosition(gravityWell: .one).y +
+        //                (radiusHi * cos(gravityWellAngle * 3)),
+        //            mass: (hiMaxIndex * amplitude),
+        //            spin: (hiMinIndex * amplitude))
+        //
+        //        particleLab.setGravityWellProperties(
+        //            gravityWell: .three,
+        //            normalisedPositionX: particleLab.getGravityWellNormalisedPosition(gravityWell: .four).x +
+        //                (radiusHi * sin((gravityWellAngle + floatPi) * 3)),
+        //            normalisedPositionY: particleLab.getGravityWellNormalisedPosition(gravityWell: .four).y +
+        //                (radiusHi * cos((gravityWellAngle + floatPi) * 3)),
+        //            mass: (hiMaxIndex * amplitude),
+        //            spin: (hiMinIndex * amplitude))
     }
     
     // MARK: Layout

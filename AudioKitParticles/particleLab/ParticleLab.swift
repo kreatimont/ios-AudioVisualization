@@ -68,13 +68,14 @@ class ParticleLab: MTKView {
     
     lazy var blur: MPSImageGaussianBlur = {
         [unowned self] in
-        return MPSImageGaussianBlur(device: self.device!, sigma: 10)
+        return MPSImageGaussianBlur(device: self.device!, sigma: 0)
         }()
     
     lazy var dilate: MPSImageAreaMax = {
         [unowned self] in
-        return MPSImageAreaMax(device: self.device!, kernelWidth: 1, kernelHeight: 1)
+        return MPSImageAreaMax(device: self.device!, kernelWidth: 9, kernelHeight: 9)
         }()
+
     
     var clearOnStep = true
     
@@ -308,6 +309,8 @@ class ParticleLab: MTKView {
         commandEncoder.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
         
         commandEncoder.endEncoding()
+        
+        
         
         if !clearOnStep {
             let inPlaceTexture = UnsafeMutablePointer<MTLTexture>.allocate(capacity: 1)
