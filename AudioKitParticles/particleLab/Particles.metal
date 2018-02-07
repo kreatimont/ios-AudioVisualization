@@ -61,8 +61,7 @@ kernel void particleRendererShader(texture2d<float, access::write> outTexture [[
 //                                   type == 0 ? 0.0 : type == 1 ? 0.0 : 1.0,
 //                                   type == 0 ? 0.0 : type == 1 ? 1.0 : 0.0, 1);
     
-    const float4 outColor = float4(0.8, 0.8, 0.0, 1); //yellow color
-    
+    const float4 outColor = float4(1.0, 1.0, 1.0, 1); //yellow color
     
     // ---
     
@@ -117,37 +116,37 @@ kernel void particleRendererShader(texture2d<float, access::write> outTexture [[
     
     // ---
     
-//    const uint2 particlePositionB(inParticle[1].x, inParticle[1].y);
-//
-//    if (particlePositionB.x > 0 && particlePositionB.y > 0 && particlePositionB.x < imageWidth && particlePositionB.y < imageHeight)
-//    {
-//        outTexture.write(outColor, particlePositionB);
-//    }
-//    else if (respawnOutOfBoundsParticles)
-//    {
-//        inParticle[1].z = 0;
-//        inParticle[1].w = 0;
-//
-//        inParticle[1].x = rand(id, inParticle[1].x, inParticle[1].y) * imageWidth;
-//        inParticle[1].y = rand(id, inParticle[1].y, inParticle[1].x) * imageWidth;
-//    }
-//
-//    const float2 particlePositionBFloat(inParticle[1].x, inParticle[1].y);
-//
-//    const float distanceZeroB = fast::max(distance_squared(particlePositionBFloat, gravityWellZeroPosition), 0.01);
-//    const float distanceOneB = fast::max(distance_squared(particlePositionBFloat, gravityWellOnePosition), 0.01);
-//    const float distanceTwoB = fast::max(distance_squared(particlePositionBFloat, gravityWellTwoPosition), 0.01);
-//    const float distanceThreeB = fast::max(distance_squared(particlePositionBFloat, gravityWellThreePosition), 0.01);
-//
-//    const float factorBZero =   (gravityWellZeroMass / distanceZeroB);
-//    const float factorBOne =    (gravityWellOneMass / distanceOneB);
-//    const float factorBTwo =    (gravityWellTwoMass / distanceTwoB);
-//    const float factorBThree =  (gravityWellThreeMass / distanceThreeB);
-//
-//    const float spinBZero =   (gravityWellZeroSpin / distanceZeroB);
-//    const float spinBOne =    (gravityWellOneSpin / distanceOneB);
-//    const float spinBTwo =    (gravityWellTwoSpin / distanceTwoB);
-//    const float spinBThree =  (gravityWellThreeSpin / distanceThreeB);
+    const uint2 particlePositionB(inParticle[1].x, inParticle[1].y);
+
+    if (particlePositionB.x > 0 && particlePositionB.y > 0 && particlePositionB.x < imageWidth && particlePositionB.y < imageHeight)
+    {
+        outTexture.write(outColor, particlePositionB);
+    }
+    else if (respawnOutOfBoundsParticles)
+    {
+        inParticle[1].z = 0;
+        inParticle[1].w = 0;
+
+        inParticle[1].x = rand(id, inParticle[1].x, inParticle[1].y) * imageWidth;
+        inParticle[1].y = rand(id, inParticle[1].y, inParticle[1].x) * imageWidth;
+    }
+    
+    const float2 particlePositionBFloat(inParticle[1].x, inParticle[1].y);
+
+    const float distanceZeroB = fast::max(distance_squared(particlePositionBFloat, gravityWellZeroPosition), 0.01);
+    const float distanceOneB = fast::max(distance_squared(particlePositionBFloat, gravityWellOnePosition), 0.01);
+    const float distanceTwoB = fast::max(distance_squared(particlePositionBFloat, gravityWellTwoPosition), 0.01);
+    const float distanceThreeB = fast::max(distance_squared(particlePositionBFloat, gravityWellThreePosition), 0.01);
+
+    const float factorBZero =   (gravityWellZeroMass / distanceZeroB);
+    const float factorBOne =    (gravityWellOneMass / distanceOneB);
+    const float factorBTwo =    (gravityWellTwoMass / distanceTwoB);
+    const float factorBThree =  (gravityWellThreeMass / distanceThreeB);
+
+    const float spinBZero =   (gravityWellZeroSpin / distanceZeroB);
+    const float spinBOne =    (gravityWellOneSpin / distanceOneB);
+    const float spinBTwo =    (gravityWellTwoSpin / distanceTwoB);
+    const float spinBThree =  (gravityWellThreeSpin / distanceThreeB);
 //
 //    // ---
 //

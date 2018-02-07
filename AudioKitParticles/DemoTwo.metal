@@ -32,8 +32,7 @@ struct Uniforms
 };
 
 vertex TexturedColoredOutVertex vertex_demo_two(TexturedInVertex vert [[stage_in]],
-                                                constant Uniforms &uniforms [[buffer(1)]])
-{
+                                                constant Uniforms &uniforms [[buffer(1)]]) {
     float4x4 MV = uniforms.modelViewMatrix;
     float3x3 normalMatrix(MV[0].xyz, MV[1].xyz, MV[2].xyz);
     float4 modelNormal = vert.normal;

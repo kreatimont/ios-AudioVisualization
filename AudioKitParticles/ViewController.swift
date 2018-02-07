@@ -70,7 +70,7 @@ class ViewController: UIViewController {
         
         view.backgroundColor = UIColor.white
         
-        let numParticles = ParticleCount.thousand
+        let numParticles = ParticleCount.qtrMillion
         
         if view.frame.height < view.frame.width {
             particleLab = ParticleLab(width: UInt(view.frame.width),
